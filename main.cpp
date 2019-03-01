@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
 			words.emplace(line, n);
 			//How do you access the line number for the word that the user enters?
 			//How would you enter that into the vector so you can access the vector later?
+			//always do this after implace
+			//create an integer that will add every time a new line is made
 		}
 
 		infile.close();
@@ -51,33 +53,35 @@ int main(int argc, char *argv[])
 	{
 		cerr << "Unable to open file: " << argv[1] << endl;
 	}
-	//create a loop to assure program doesn't stop after one search through map
-	//Drawing a blank, how would you create a loop for here??
+	//creating a loop to assure program doesn't stop after one search through map
 	string word = "";
 	cout << "Enter a word (case sensitive): ";
-	cin >> word;
 
-	auto it = words.find(word);
-	if (it == words.end())
+	while (getline(cin, word))
 	{
-		cerr << "Word could not be found.";
-	}
-	else //printing out word finding result
-	{
-		cout << word << " found " << words.at(word).frequency << " times on lines: " << endl;
-		for (size_t positionInVector = 0; positionInVector < words.at(word).appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
+		auto it = words.find(word);
+		if (it == words.end())
 		{
+			cerr << "Word could not be found." << endl;
+		}
+		else //printing out word finding result
+		{
+			cout << word << " found " << words.at(word).frequency << " times on lines: " << endl;
+			for (size_t positionInVector = 0; positionInVector < words.at(word).appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
+			{
 
-			cout << words.at(word).appears_on_lines.at(positionInVector);
-			if (positionInVector != (words.at(word).appears_on_lines.size() - 1)) //getting rid of trailing comma
-			{
-				cout << ", ";
-			}
-			else
-			{
-				cout << "\n";
+				cout << words.at(word).appears_on_lines.at(positionInVector);
+				if (positionInVector != (words.at(word).appears_on_lines.size() - 1)) //getting rid of trailing comma
+				{
+					cout << ", ";
+				}
+				else
+				{
+					cout << "\n";
+				}
 			}
 		}
+		cout << "Enter a word (case sensitive): " << endl;
 	}
 	return 0;
 }
