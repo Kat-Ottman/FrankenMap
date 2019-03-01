@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
 		cerr << "Unable to open file: " << argv[1] << endl;
 	}
 	//create a loop to assure program doesn't stop after one search through map
+	//Drawing a blank, how would you create a loop for here??
 	string word = "";
 	cout << "Enter a word (case sensitive): ";
 	cin >> word;
