@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Node
+class Node // creating a class that's variables will have two pieces of data
 {
   public:
 	int frequency;
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	{
 		string line;
 
-		while (getline(infile, line)) //adding pairs to words map
+		while (getline(infile, line)) //adding pairs based on text file lines to map
 		{
 			Node n = Node();
 
@@ -51,22 +51,31 @@ int main(int argc, char *argv[])
 	{
 		cerr << "Unable to open file: " << argv[1] << endl;
 	}
-
-	string word;
+	//create a loop to assure program doesn't stop after one search through map
+	string word = "";
 	cout << "Enter a word (case sensitive): ";
 	cin >> word;
+
 	auto it = words.find(word);
 	if (it == words.end())
 	{
 		cerr << "Word could not be found.";
 	}
-	else
+	else //printing out word finding result
 	{
 		cout << word << " found " << words.at(word).frequency << " times on lines: " << endl;
-		for (int i = 0; i < words.at(word).appears_on_lines.size(); i++)
+		for (size_t positionInVector = 0; positionInVector < words.at(word).appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
 		{
-			cout << words.at(word).appears_on_lines.at(i);
-			//How do you print a list of the line numbers with commas without the trailing comma?
+
+			cout << words.at(word).appears_on_lines.at(positionInVector);
+			if (positionInVector != (words.at(word).appears_on_lines.size() - 1)) //getting rid of trailing comma
+			{
+				cout << ", ";
+			}
+			else
+			{
+				cout << "\n";
+			}
 		}
 	}
 	return 0;
