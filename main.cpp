@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -19,6 +20,8 @@ class Node // creating a class that's variables will have two pieces of data
 	int frequency;
 	Node() { frequency = 1; }
 	vector<int> appears_on_lines;
+	//Would you add the count() here, inside the if(infile.is_open()) line, or right before the while loop?
+	//How do you have it so frequency adds on itself for each occurence of a word versus for every time that word appears frequency will equal 1?
 };
 
 int main(int argc, char *argv[])
@@ -39,12 +42,9 @@ int main(int argc, char *argv[])
 		while (getline(infile, line)) //adding pairs based on text file lines to map
 		{
 			Node n = Node();
-
+			//n.appears_on_lines.push_back(n.countLine); //This line and the next comment work if there is only one occurence of each individual word
 			words.emplace(line, n);
-			//How do you access the line number for the word that the user enters?
-			//How would you enter that into the vector so you can access the vector later?
-			//always do this after implace
-			//create an integer that will add every time a new line is made
+			//n.countLine++;
 		}
 
 		infile.close();
@@ -60,13 +60,16 @@ int main(int argc, char *argv[])
 	while (getline(cin, word))
 	{
 		auto it = words.find(word);
+
 		if (it == words.end())
 		{
 			cerr << "Word could not be found." << endl;
 		}
 		else //printing out word finding result
 		{
-			cout << word << " found " << words.at(word).frequency << " times on lines: " << endl;
+			cout << word << " found " << words.at(word).frequency << " time(s) on lines: " << endl;
+			//frequency doesn't work unless there's only one occurence of the word
+
 			for (size_t positionInVector = 0; positionInVector < words.at(word).appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
 			{
 
