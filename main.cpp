@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 			Node n;
 
 			auto it = words.find(line);
-			if ((*it) == words.at(line)) //if line exists in map
+			if ((*it).first == line) //if line exists in map
 			{
 				n = (*it).second;
 				n.frequency++;
@@ -56,6 +56,13 @@ int main(int argc, char *argv[])
 			n.appears_on_lines.push_back(countLine); //This line and the next comment work if there is only one occurence of each individual word
 			words.emplace(line, n);
 			countLine++;
+
+			cout << line << " + " << n.frequency << ", ";
+			for (size_t i = 0; i < n.appears_on_lines.size(); i++)
+			{
+				cout << n.appears_on_lines.at(i) << ", ";
+			}
+			cout << "\n";
 		}
 
 		infile.close();
@@ -79,7 +86,6 @@ int main(int argc, char *argv[])
 		else //printing out word finding result
 		{
 			cout << word << " found " << (*it).second.frequency << " time(s) on lines: " << endl;
-			//frequency doesn't work unless there's only one occurence of the word
 
 			for (size_t positionInVector = 0; positionInVector < (*it).second.appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
 			{
@@ -95,7 +101,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		cout << "Enter a word (case sensitive): " << endl;
+		cout << "Enter a word (case sensitive): ";
 	}
 	return 0;
 }
