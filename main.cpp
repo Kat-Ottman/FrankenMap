@@ -40,29 +40,41 @@ int main(int argc, char *argv[])
 
 		while (getline(infile, line)) //adding pairs based on text file lines to map
 		{
-			Node n;
 
 			auto it = words.find(line);
-			if ((*it).first == line) //if line exists in map
+			if (it->first == line) //if line exists in map
 			{
-				n = (*it).second;
-				n.frequency++;
+				cout << "Adding to an existing Node." << endl;
+				it->second.frequency++;
+				it->second.appears_on_lines.push_back(countLine);
+				countLine++;
+
+				cout << line << " frequency: " << it->second.frequency << " vector: "; //tests whether map gets updated per line
+				for (size_t i = 0; i < it->second.appears_on_lines.size(); i++)
+				{
+					cout << it->second.appears_on_lines.at(i) << ", ";
+				}
+				cout << " size: " << it->second.appears_on_lines.size() << endl;
+			}
+			else if (it->first != line)
+			{
+				cout << "Creating a new Node." << endl;
+				Node n = Node();
+				words.emplace(line, n);
+				n.appears_on_lines.push_back(countLine);
+				countLine++;
+
+				cout << line << " frequency: " << n.frequency << " vector: "; //tests whether map gets updated per line
+				for (size_t i = 0; i < n.appears_on_lines.size(); i++)
+				{
+					cout << n.appears_on_lines.at(i) << ", ";
+				}
+				cout << " size: " << n.appears_on_lines.size() << endl;
 			}
 			else
 			{
-				n = Node();
+				cerr << "Something is wrong." << endl;
 			}
-
-			n.appears_on_lines.push_back(countLine); //This line and the next comment work if there is only one occurence of each individual word
-			words.emplace(line, n);
-			countLine++;
-
-			cout << line << " + " << n.frequency << ", ";
-			for (size_t i = 0; i < n.appears_on_lines.size(); i++)
-			{
-				cout << n.appears_on_lines.at(i) << ", ";
-			}
-			cout << "\n";
 		}
 
 		infile.close();
@@ -85,13 +97,13 @@ int main(int argc, char *argv[])
 		}
 		else //printing out word finding result
 		{
-			cout << word << " found " << (*it).second.frequency << " time(s) on lines: " << endl;
+			cout << word << " found " << it->second.frequency << " time(s) on line(s): " << endl;
 
-			for (size_t positionInVector = 0; positionInVector < (*it).second.appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
+			for (size_t positionInVector = 0; positionInVector < it->second.appears_on_lines.size(); positionInVector++) //print out lines where word appears in map
 			{
 
-				cout << (*it).second.appears_on_lines.at(positionInVector);
-				if (positionInVector != ((*it).second.appears_on_lines.size() - 1)) //getting rid of trailing comma
+				cout << it->second.appears_on_lines.at(positionInVector);
+				if (positionInVector != (it->second.appears_on_lines.size() - 1)) //getting rid of trailing comma
 				{
 					cout << ", ";
 				}
