@@ -44,32 +44,33 @@ int main(int argc, char *argv[])
 			auto it = words.find(line);
 			if (it->first == line) //if line exists in map
 			{
-				cout << "Adding to an existing Node." << endl;
+				//cout << "Adding to an existing Node." << endl;  //testing which if loop occurs
 				it->second.frequency++;
 				it->second.appears_on_lines.push_back(countLine);
 				countLine++;
 
-				cout << line << " frequency: " << it->second.frequency << " vector: "; //tests whether map gets updated per line
+				/* cout << line << " frequency: " << it->second.frequency << " vector: "; //tests whether map gets updated per line
 				for (size_t i = 0; i < it->second.appears_on_lines.size(); i++)
 				{
 					cout << it->second.appears_on_lines.at(i) << ", ";
 				}
-				cout << " size: " << it->second.appears_on_lines.size() << endl;
+				cout << " size: " << it->second.appears_on_lines.size() << endl; */
 			}
 			else if (it->first != line)
 			{
-				cout << "Creating a new Node." << endl;
+				//cout << "Creating a new Node." << endl; //testing which if loop occurs
 				Node n = Node();
 				words.emplace(line, n);
 				n.appears_on_lines.push_back(countLine);
+				words.at(line).appears_on_lines.push_back(countLine);
 				countLine++;
 
-				cout << line << " frequency: " << n.frequency << " vector: "; //tests whether map gets updated per line
+				/* cout << line << " frequency: " << n.frequency << " vector: "; //tests whether map gets updated per line
 				for (size_t i = 0; i < n.appears_on_lines.size(); i++)
 				{
 					cout << n.appears_on_lines.at(i) << ", ";
 				}
-				cout << " size: " << n.appears_on_lines.size() << endl;
+				cout << " size: " << n.appears_on_lines.size() << endl; */
 			}
 			else
 			{
